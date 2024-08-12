@@ -4,20 +4,10 @@ import plotly.express as px
 import plotly.graph_objects as go
 import dash
 from dash import html, dcc, callback, Input, Output, State
-import finnhub
 import datetime
 import requests
 import json
 
-# finnhub_client = finnhub.Client(api_key="cqsn0b1r01qg43b90gh0cqsn0b1r01qg43b90ghg")
-
-# print(finnhub_client.quote("AAPL"))
-
-
-# result_data = requests.get(f"{test_url}{api_key}")
-# with s as requests.session:
-# print(result_data.json())
-# exit()
 
 result_data = {
     "ticker": "AAPL",
