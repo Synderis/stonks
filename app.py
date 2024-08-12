@@ -3,6 +3,9 @@ from dash import Dash, html, dcc
 from dash.dependencies import Input, Output
 import pandas as pd
 
+# import pandas_ta as ta
+
+
 external_stylesheets = ["/assets/main.css"]
 app = Dash(__name__, use_pages=True, external_stylesheets=external_stylesheets)
 
