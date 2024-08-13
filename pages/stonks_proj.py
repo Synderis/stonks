@@ -337,13 +337,13 @@ layout = html.Div(
                 "flex-direction": "row",
             },
         ),
-        html.Div(
-            [
-                dcc.RangeSlider(0, 20, 1, value=[0, 20], id="range-slider"),
-            ],
-            id="range-slider-container",
-            style={"width": "800px", "margin": "auto"},
-        ),
+        # html.Div(
+        #     [
+        #         dcc.RangeSlider(0, 20, 1, value=[0, 20], id="range-slider"),
+        #     ],
+        #     id="range-slider-container",
+        #     style={"width": "800px", "margin": "auto"},
+        # ),
         dcc.Graph(
             id="graph",
             figure=figure,
@@ -391,28 +391,18 @@ def fetch_ohlc_data(timeframe):
 
 @callback(
     Output("graph", "extendData"),
-    # Input("interval", "n_intervals"),
     Input("ohlc-data1", "data"),
-    Input("range-slider", "value"),
-    # prevent_initial_call=True,
 )
-def update_graph(ohlc_data1, range_values):
+def update_graph(ohlc_data1):
     if not ohlc_data1:
-        return None  # No update if there is no data
+        return None
 
     data = pd.DataFrame(ohlc_data1)
 
-    # Ensure range_values are within bounds
-    max_index = len(data)
-    start_index = min(range_values[0], max_index - 1)
-    end_index = min(range_values[1], max_index)
-
-    data = data.iloc[start_index:end_index]
-
-    # Extend data only if there are new data points to add
+    # Ensure the data is not empty before updating the graph
     if data.empty:
         return None
-    # Update the graph with the next data point
+
     return (
         {
             "x": [data.timestamp],
@@ -421,6 +411,6 @@ def update_graph(ohlc_data1, range_values):
             "low": [data.low],
             "close": [data.close],
         },
-        [0],  # Trace index
-        len(data),  # Max points, if needed
+        [0],
+        len(data),
     )
